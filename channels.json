@@ -13,20 +13,20 @@
             "name": "CCD"
         },
         {
-            "visible": false,
-            "active": "false",
+            "visible": true,
+            "active": "true",
             "channel": 3,
             "name": "Relay 3"
         },
         {
-            "visible": false,
-            "active": "false",
+            "visible": true,
+            "active": "true",
             "channel": 4,
             "name": "Relay 4"
         },
         {
-            "visible": false,
-            "active": "false",
+            "visible": true,
+            "active": "true",
             "channel": 5,
             "name": "Relay 5"
         },
@@ -47,6 +47,54 @@
             "active": "true",
             "channel": 8,
             "name": "Dew Controller"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 9,
+            "name": "Relay 9"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 10,
+            "name": "Relay 10"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 11,
+            "name": "Relay 11"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 12,
+            "name": "Relay 12"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 13,
+            "name": "Relay 13"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 14,
+            "name": "Relay 14"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 15,
+            "name": "Relay 15"
+        },
+        {
+            "visible": true,
+            "active": "true",
+            "channel": 16,
+            "name": "Relay 16"
         }
 
     ]

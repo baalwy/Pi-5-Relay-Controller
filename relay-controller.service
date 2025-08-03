@@ -1,0 +1,26 @@
+[Unit]
+Description=Relay Controller Server
+After=network.target multi-user.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/pi-relay-controller-modmypi2025
+ExecStart=/home/pi/pi-relay-controller-modmypi2025/venv/bin/python /home/pi/pi-relay-controller-modmypi2025/server.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment variables
+Environment=PYTHONPATH=/home/pi/pi-relay-controller-modmypi2025
+Environment=PYTHONUNBUFFERED=1
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

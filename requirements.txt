@@ -1,0 +1,43 @@
+# Pi-5 Relay Controller Dependencies
+# ===========================================
+
+# Core web framework
+Flask==2.3.3
+Flask-Bootstrap==3.3.7.1
+Werkzeug==2.3.7
+
+# GPIO control for Raspberry Pi 5
+# Note: gpiod might need system-level installation
+gpiod==2.1.3
+
+# Web server utilities
+gunicorn==21.2.0
+
+# System and utility libraries
+click==8.1.7
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+
+# For better JSON handling
+simplejson==3.19.2
+
+# For system service management
+psutil==5.9.6
+
+# For better error handling and logging
+colorlog==6.7.0
+
+# Optional but recommended for production
+# Uncomment these for enhanced features:
+# Flask-Login==0.6.3        # For advanced user management
+# Flask-WTF==1.1.1          # For CSRF protection
+# Flask-Limiter==3.5.0      # For rate limiting
+# redis==5.0.1              # For session storage (if needed)
+
+# Development and testing (install with: pip install -r requirements-dev.txt)
+# pytest==7.4.2
+# pytest-flask==1.2.0
+# black==23.7.0
+# flake8==6.0.0
+# coverage==7.3.2

@@ -1,59 +1,321 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ relay_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            color: white;
+        }
+        
+        .relay-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .relay-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .relay-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .relay-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .relay-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .relay-status {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .status-indicator.on {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            box-shadow: 0 0 20px rgba(81, 207, 102, 0.5);
+        }
+        
+        .status-indicator.off {
+            background: linear-gradient(135deg, #868e96 0%, #6c757d 100%);
+        }
+        
+        .status-indicator i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .status-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .status-text.on {
+            color: #40c057;
+        }
+        
+        .status-text.off {
+            color: #6c757d;
+        }
+        
+        .relay-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .control-btn {
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-on {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+            color: white;
+        }
+        
+        .btn-on:hover {
+            box-shadow: 0 5px 15px rgba(81, 207, 102, 0.3);
+            color: white;
+        }
+        
+        .btn-off {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+        
+        .btn-off:hover {
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            color: white;
+        }
+        
+        .btn-toggle {
+            background: linear-gradient(135deg, #339af0 0%, #228be6 100%);
+            color: white;
+        }
+        
+        .btn-toggle:hover {
+            box-shadow: 0 5px 15px rgba(51, 154, 240, 0.3);
+            color: white;
+        }
+        
+        .btn-status {
+            background: linear-gradient(135deg, #868e96 0%, #6c757d 100%);
+            color: white;
+        }
+        
+        .btn-status:hover {
+            box-shadow: 0 5px 15px rgba(134, 142, 150, 0.3);
+            color: white;
+        }
+        
+        .all-controls {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .all-controls h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .all-controls .btn {
+            margin: 0.5rem;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            .relay-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .all-controls .btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('logout') }}" class="logout-btn">
+        <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+    </a>
 
-{% block scripts %}
-{{ super() }}
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
-<link href="{{ url_for('static', filename='css/sweetalert2.css') }}" rel="stylesheet">
-{% endblock %}
+    <div class="container">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-microchip me-3"></i>{{ relay_name }}</h1>
+                <p class="subtitle">نظام التحكم في الريلايات - 16 قناة</p>
+            </div>
 
-{% block title %}{{ relay_name }}{% endblock %}
+            <div class="row">
+                {% for val in channel_info %}
+                    {% if val["visible"] %}
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="relay-card" id="relay-card-{{ val['channel'] }}">
+                            <div class="relay-header">
+                                <h3 class="relay-name">{{ val['name'] }}</h3>
+                                <span class="relay-number">ريلي {{ val['channel'] }}</span>
+                            </div>
+                            
+                            <div class="relay-status">
+                                <div class="status-indicator off" id="status-indicator-{{ val['channel'] }}">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="status-text off" id="status-text-{{ val['channel'] }}">مُطفأ</div>
+                            </div>
+                            
+                            <div class="relay-controls">
+                                <button class="control-btn btn-on" onclick="setRelay({{ val['channel'] }}, 'on')">
+                                    <i class="fas fa-power-off me-1"></i>تشغيل
+                                </button>
+                                <button class="control-btn btn-off" onclick="setRelay({{ val['channel'] }}, 'off')">
+                                    <i class="fas fa-power-off me-1"></i>إيقاف
+                                </button>
+                                <button class="control-btn btn-toggle" onclick="toggleRelay({{ val['channel'] }})">
+                                    <i class="fas fa-exchange-alt me-1"></i>تبديل
+                                </button>
+                                <button class="control-btn btn-status" onclick="showRelayStatus({{ val['channel'] }})">
+                                    <i class="fas fa-info-circle me-1"></i>الحالة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-
-{% block page_content %}
-<table class="table table-bordered">
-  <tbody>
-
-    {% for val in channel_info  %}
-{% set i_channel = val['channel'] %}
-      {% if val["visible"] %}
-      <tr>
-             <th scope="row">{{ val['name'] }} <br> Relay {{ val['channel'] }}</th>
-        <td>
-          <div class="btn-group-lg" role="group" aria-label="Relay {{ i_channel }}">
-            <button type="button" class="btn btn-success" id="on-{{ i_channel }}" onclick="setRelay({{ i_channel }}, 'on');">On</button>
-            <button type="button" class="btn btn-danger" id="off-{{ i_channel }}" onclick="setRelay({{ i_channel }}, 'off');">Off
-            </button>
-            <button type="button" class="btn btn-warning" id="reboot-{{ i_channel }}" onclick="setRelay({{ i_channel }}, 'reboot');">Reboot
-            </button>
-            <button type="button" class="btn btn-info" id="toggle-{{ i_channel }}" onclick="toggleRelay({{ i_channel }});">Toggle
-            </button>
-            <button type="button" class="btn btn-secondary" id="data-1" onclick="getRelayStatus({{ i_channel }});">
-              Status
-            </button>
-          </div>
-        </td>
-      </tr>
-      {% endif %}
-    {% endfor %}
-    <tr>
-      <th scope="row">All</th>
-      <td>
-        <div class="btn-group-lg" role="group" aria-label="All">
-          <button type="button" class="btn btn-success btn-lg" id="all_on" onclick="setAll(true);">
-            All On
-          </button>
-          <button type="button" class="btn btn-danger btn-lg" id="all_off" onclick="setAll(false);">
-            All Off
-          </button>
-          <button type="button" class="btn btn-info btn-lg" id="all_off" onclick="toggleAll(false);">
-            Toggle All
-          </button>
+            <div class="all-controls">
+                <h3><i class="fas fa-cogs me-2"></i>التحكم العام</h3>
+                <button class="btn btn-success btn-lg" onclick="setAll(true)">
+                    <i class="fas fa-power-off me-2"></i>تشغيل الكل
+                </button>
+                <button class="btn btn-danger btn-lg" onclick="setAll(false)">
+                    <i class="fas fa-power-off me-2"></i>إيقاف الكل
+                </button>
+                <button class="btn btn-info btn-lg" onclick="toggleAll()">
+                    <i class="fas fa-exchange-alt me-2"></i>تبديل الكل
+                </button>
+            </div>
         </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+    </div>
 
-</div>
-
-{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

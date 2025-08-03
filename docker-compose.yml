@@ -1,0 +1,45 @@
+# Pi-5 Relay Controller Docker Compose
+# ====================================
+# For easy containerized deployment
+
+version: '3.8'
+
+services:
+  relay-controller:
+    build: .
+    container_name: pi5-relay-controller
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./relay_states.json:/app/relay_states.json
+      - ./channels.json:/app/channels.json
+    devices:
+      - /dev/gpiochip0:/dev/gpiochip0
+    privileged: true  # Required for GPIO access
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/status/1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Optional: Add nginx reverse proxy
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: pi5-relay-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - relay-controller
+  #   restart: unless-stopped
+
+networks:
+  default:
+    name: pi5-relay-network

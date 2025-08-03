@@ -1,14 +1,152 @@
-{% extends 'base.html' %}
-
-{% block title %}Pi Relay Controller - Internal Error{% endblock %}
-
-{% block page_content %}
-<img src="{{ url_for('static', filename='img/error_100.png') }}" />
-<div class="page-header">
-  <h1>Internal Error</h1>
-</div>
-<p>The web server was unable to load the requested page because of an internal error. You could try the URL again or
-  wait a while and try it yet again. The problem is that nothing's been done to actually address the issue, so
-  chances are nothing will change the next time you try this URL. Good luck!</p>
-<p>In reporting this error, the server said: <strong>{{ the_error }}</strong></p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - خطأ في الخادم | Pi-5 Relay Controller</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .error-icon {
+            font-size: 6rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+        
+        .error-code {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home, .btn-retry {
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-retry {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .btn-home:hover, .btn-retry:hover {
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-home:hover {
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-retry:hover {
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: right;
+        }
+        
+        .troubleshoot-steps {
+            text-align: right;
+            margin-top: 1rem;
+        }
+        
+        .troubleshoot-steps ol {
+            padding-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <i class="fas fa-server error-icon"></i>
+        <div class="error-code">500</div>
+        <h2>خطأ داخلي في الخادم</h2>
+        <p class="error-message">
+            عذراً، حدث خطأ غير متوقع في الخادم. نحن نعمل على حل هذه المشكلة.
+        </p>
+        
+        <div class="btn-group">
+            <a href="javascript:location.reload()" class="btn-retry">
+                <i class="fas fa-redo me-2"></i>
+                إعادة المحاولة
+            </a>
+            <a href="{{ url_for('index') }}" class="btn-home">
+                <i class="fas fa-home me-2"></i>
+                الصفحة الرئيسية
+            </a>
+        </div>
+        
+        <div class="error-details">
+            <strong>خطوات استكشاف الأخطاء:</strong>
+            <div class="troubleshoot-steps">
+                <ol>
+                    <li>انتظر دقيقة واحدة ثم أعد المحاولة</li>
+                    <li>تحقق من اتصال الشبكة</li>
+                    <li>امسح ذاكرة التخزين المؤقت للمتصفح</li>
+                    <li>إذا استمرت المشكلة، تواصل مع المطور</li>
+                </ol>
+            </div>
+            
+            <div class="mt-3">
+                <strong>للمطورين:</strong><br>
+                تحقق من سجلات الخادم: <code>sudo journalctl -u relay-controller.service</code>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
